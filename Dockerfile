@@ -21,6 +21,12 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 # Install PHP extensions
 RUN docker-php-ext-install pdo pdo_pgsql pgsql
 
+# Set permissions
+RUN chown -R www-data:www-data storage bootstrap/cache
+
+# Generate app key
+RUN php artisan config:clear && php artisan key:generate
+
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
