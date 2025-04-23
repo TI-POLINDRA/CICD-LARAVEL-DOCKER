@@ -21,6 +21,9 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 # Install PHP extensions
 RUN docker-php-ext-install pdo pdo_pgsql pgsql
 
+# set workdir
+WORKDIR /var/www
+
 # Set permissions
 RUN chown -R www-data:www-data storage bootstrap/cache
 
