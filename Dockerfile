@@ -21,17 +21,11 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 # Install PHP extensions
 RUN docker-php-ext-install pdo pdo_pgsql pgsql
 
-# set workdir
-WORKDIR /var/www
-
-# Set permissions
-RUN chown -R www-data:www-data storage bootstrap/cache
-
-# Generate app key
-RUN php artisan config:clear && php artisan key:generate
-
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Create project directory
+WORKDIR /var/www
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
